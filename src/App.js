@@ -3,8 +3,9 @@ import { useQuery } from "@apollo/react-hooks";
 import gql from "graphql-tag";
 
 const Atricle_Info = gql`
-  {
-    articles :articles(Title:Web){
+  query {
+    articles {
+      id
       Title
       Body
     }
