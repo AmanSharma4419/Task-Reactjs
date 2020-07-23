@@ -3,6 +3,7 @@ import ReactDOM from "react-dom";
 import "./index.css";
 import App from "./App";
 import * as serviceWorker from "./serviceWorker";
+import "../node_modules/bulma/css/bulma.css"
 
 import { ApolloClient } from "apollo-client";
 import { InMemoryCache } from "apollo-cache-inmemory";
@@ -11,7 +12,7 @@ import { ApolloProvider } from "@apollo/react-hooks";
 
 const cache = new InMemoryCache();
 const link = new HttpLink({
-  uri: "http://localhost:1337/graphql",
+  uri: "https://shielded-lowlands-88307.herokuapp.com/graphql",
 });
 
 const client = new ApolloClient({

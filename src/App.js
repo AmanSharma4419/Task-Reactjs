@@ -1,40 +1,25 @@
 import React from "react";
-import { useQuery } from "@apollo/react-hooks";
-import gql from "graphql-tag";
+import { BrowserRouter as Router, Route, Redirect } from "react-router-dom";
 
-const Atricle_Info = gql`
-  query {
-    articles {
-      id
-      Title
-      Body
-    }
-  }
-`;
+import FetchArticles from "./FetchArticles";
+import Authetication from "./Authetication";
+
 function App() {
-  const { data, loading, error } = useQuery(Atricle_Info);
-  if (loading) return <p>Loading</p>;
-  if (error) return <p>`There Might Be Some Error Due To ${error} ` </p>;
-  console.log(data, "getting the data by graphql");
   return (
-    <>
-      <p>List Of Data Given Below</p>
-      <p>
-        {data &&
-          data.articles.map((value, index) => {
-            return (
-              <div key={index}>
-                <p>
-                  <strong>Title</strong>:{value.Title}
-                </p>
-                <p>
-                  <strong>Body</strong>:{value.Body}
-                </p>
-              </div>
-            );
-          })}
-      </p>
-    </>
+    <div className="App">
+      <Router>
+        <Route exact path="/" component={Authetication} />
+      </Router>
+      {localStorage.getItem("userToken") ? (
+        <Router>
+          <Route path="/articles" component={FetchArticles} />
+        </Router>
+      ) : (
+        <Router>
+          <Redirect to="/" />
+        </Router>
+      )}
+    </div>
   );
 }
 
