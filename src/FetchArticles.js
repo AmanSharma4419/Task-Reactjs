@@ -33,6 +33,8 @@ function FetchArticles() {
       <center>
         <p>Articles</p>
       </center>
+      <br />
+
       <p>
         {data &&
           data.articles.map((value, index) => {

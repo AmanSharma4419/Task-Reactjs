@@ -31,11 +31,12 @@ export default function Auth(props) {
             }}
           >
             <div
-              style={{ width: "30%", marginLeft: "10px", marginTop: "20px" }}
+              style={{ width: "30%", marginLeft: "10px", marginTop: "50px" }}
             >
               <center>
                 <h1>UserLogin</h1>
               </center>
+              <br/>
               <div class="field">
                 <p class="control has-icons-left has-icons-right">
                   <input
