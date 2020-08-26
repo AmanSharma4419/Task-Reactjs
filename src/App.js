@@ -1,82 +1,23 @@
 import React from "react";
 
-import io from "socket.io-client";
+import AboutPage from "./components/about/AboutPage";
+import Homepage from "./components/home/HomePage";
+import { Route, Switch } from "react-router-dom";
+import Header from "./components/common/Header";
+import PageNotFound from "./components/PageNotFound";
+import CoursePage from "./components/courses/CoursePage";
 
-class App extends React.Component {
-  constructor() {
-    super();
-    this.state = {
-      chat: [],
-      message: "",
-      username: "",
-    };
-  }
-  toUpdate = (e) => {
-    const { name, value } = e.target;
-    this.setState({
-      [name]: value,
-    });
-  };
-  socket = io("http://localhost:5000/");
+export default function App() {
+  return (
+    <>
+      <Header />
+      <Switch>
+        <Route exact path="/" component={Homepage} />
+        <Route path="/about" component={AboutPage} />
+        <Route path="/course" component={CoursePage} />
 
-  componentDidMount() {
-    this.socket.on("init", (data) => {
-      this.setState((state) => ({
-        chat: [...state.chat, data],
-      }));
-    });
-
-    this.socket.on("push", (data) => {
-      this.setState((state) => ({
-        chat: [...state.chat, data],
-      }));
-    });
-  }
-  handleClick = (socket) => {
-    socket.emit("message", {
-      name: this.state.username,
-      des: this.state.message,
-    });
-  };
-  render() {
-    return (
-      <div className="App">
-        {this.state.chat[0] &&
-          this.state.chat[0].messages.map((val, index) => {
-            return (
-              <>
-                <h1>{val.content}</h1>
-                <h2>{val.name}</h2>
-              </>
-            );
-          })}
-
-        <input
-          type="text"
-          placeholder="entername"
-          name="username"
-          value={this.state.username}
-          onChange={this.toUpdate}
-          className="input"
-        />
-        <input
-          type="text"
-          placeholder="message"
-          name="message"
-          value={this.state.message}
-          onChange={this.toUpdate}
-          className="input"
-        />
-        <button
-          onClick={() => {
-            this.handleClick(this.socket);
-          }}
-        >
-          click
-        </button>
-      </div>
-    );
-  }
+        <Route component={PageNotFound} />
+      </Switch>
+    </>
+  );
 }
-
-export default App;
